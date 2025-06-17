@@ -1,7 +1,7 @@
 ![API](https://img.shields.io/badge/Projeto-API-blue)
 
 # 🛍️ API RESTful para Sistema de E-commerce
-> Estudo – Estrutura de Dados | 2º Semestre ADS
+> Atividade Avaliativa Final – Beckend | 3º Semestre ADS
 
 Este projeto foi desenvolvido como parte da atividade final da disciplina de **Desenvolvimento Backend**, com o objetivo de criar uma **API RESTful robusta, segura e modular**, utilizando a stack **Node.js + Express + MySQL + Sequelize**.
 
@@ -61,6 +61,7 @@ O sistema simula um ambiente de e-commerce real, com **autenticação JWT**, **c
 
 ## 📂 Estrutura do Projeto
 
+```text
 API_Loja/
 ├── 📄 .sequelizerc      # Aponta para onde o Sequelize deve criar os arquivos
 ├── 📄 .env.example      # Exemplo de como configurar as variáveis de ambiente
@@ -76,6 +77,7 @@ API_Loja/
     ├── 📂 middlewares/  # Funções executadas entre a requisição e a resposta (ex: auth)
     ├── 📂 models/       # Representação das tabelas do banco de dados (os "moldes")
     └── 📂 routes/       # Definição dos endpoints da API (os caminhos/URLs)
+```
 
 ## ⚙️ Como Executar o Projeto Localmente
 
@@ -130,3 +132,80 @@ DB_DIALECT=mysql
 JWT_SECRET=sua_chave_secreta
 JWT_EXPIRES_IN=1d
 ```
+
+---
+
+4. **Crie o banco de dados**
+5. 
+- No seu gerenciador de MySQL (Workbench, phpMyAdmin ou CLI), execute:
+```bash
+CREATE DATABASE IF NOT EXISTS api_loja;
+```
+
+---
+
+5. **Execute as migrations**
+
+- Este comando criará automaticamente todas as tabelas necessárias:
+
+```bash
+npx sequelize-cli db:migrate
+```
+
+---
+
+6. **Inicie o servidor**
+
+- Para rodar em modo de desenvolvimento com reinicialização automática:
+
+```bash
+npm run dev
+```
+
+- Ou, se preferir, em modo normal:
+
+```bash
+npm start
+```
+
+---
+
+## 🔎 Testes e Validação
+
+- Com o servidor rodando, acesse a documentação interativa no Swagger:  
+  [http://localhost:3001/api-docs](http://localhost:3001/api-docs)
+
+- Realize testes via **Swagger UI** ou por ferramentas como o **Postman**.
+
+- Inclui testes básicos de:  
+  ✔️ Cadastro  
+  ✔️ Login  
+  ✔️ CRUD de Produtos e Categorias  
+  ✔️ Criação e consulta de Pedidos  
+  ✔️ Casos de erro (exemplo: token inválido, usuário inexistente, etc)
+
+---
+
+## 🔐 Segurança e Boas Práticas Aplicadas
+
+✔️ Senhas criptografadas com **bcrypt**  
+✔️ Autenticação **stateless** via **JWT**  
+✔️ Variáveis sensíveis protegidas no **.env**  
+✔️ Estrutura de código modularizada (Controllers, Models, Middlewares, etc)  
+✔️ Proteção de rotas privadas com **middleware de autenticação**  
+✔️ Documentação clara e interativa com **Swagger**
+
+---
+
+## 📌 Observações Finais
+
+Este projeto tem fins **educacionais**, simula um backend real de e-commerce e foi desenvolvido com foco em:
+
+✅ Organização de código  
+✅ Segurança  
+✅ Escalabilidade  
+✅ Boas práticas de desenvolvimento  
+
+Sinta-se à vontade para explorar, testar e sugerir melhorias! 😄
+
+---
