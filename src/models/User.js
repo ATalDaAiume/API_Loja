@@ -19,6 +19,10 @@ class User extends Model {
     });
   }
 
+  static associate(models) {
+    this.hasMany(models.Order, { foreignKey: 'userId', as: 'orders' });
+  }
+
   // Método para checar a senha
   checkPassword(password) {
     return bcrypt.compare(password, this.password);
