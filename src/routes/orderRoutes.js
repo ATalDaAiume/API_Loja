@@ -14,6 +14,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.use(authMiddleware);
 
 router.get('/', OrderController.index);
+router.get('/:id', OrderController.show); // ROTA ADICIONADA
 router.post('/', OrderController.store);
+router.patch('/:id/cancel', OrderController.cancel); // ROTA ADICIONADA (PATCH é ideal para atualizações parciais)
 
 module.exports = router;

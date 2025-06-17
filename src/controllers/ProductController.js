@@ -5,11 +5,29 @@ module.exports = {
   async index(req, res) {
     try {
       const products = await Product.findAll({
-        include: { association: 'category', attributes: ['id', 'name'] } // Inclui dados da categoria
+        include: { association: 'category', attributes: ['id', 'name'] }
       });
       return res.json(products);
     } catch (err) {
       return res.status(500).json({ error: 'Erro ao listar produtos', details: err.message });
+    }
+  },
+
+  // ADICIONADO: Listar um produto específico por ID
+  async show(req, res) {
+    try {
+      const { id } = req.params;
+      const product = await Product.findByPk(id, {
+        include: { association: 'category', attributes: ['id', 'name'] }
+      });
+
+      if (!product) {
+        return res.status(404).json({ error: 'Produto não encontrado.' });
+      }
+
+      return res.json(product);
+    } catch (err) {
+      return res.status(500).json({ error: 'Erro ao buscar produto', details: err.message });
     }
   },
 

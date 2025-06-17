@@ -11,6 +11,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
  */
 
 router.get('/', ProductController.index);
+router.get('/:id', ProductController.show); // ROTA ADICIONADA
 router.post('/', authMiddleware, ProductController.store);
 router.put('/:id', authMiddleware, ProductController.update);
 router.delete('/:id', authMiddleware, ProductController.destroy);
