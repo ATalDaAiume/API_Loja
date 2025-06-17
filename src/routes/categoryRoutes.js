@@ -6,8 +6,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
 /**
  * @swagger
  * tags:
- *   name: Categories
- *   description: Gerenciamento de categorias de produtos
+ * name: Categories
+ * description: Gerenciamento de categorias de produtos
  */
 
 /**
