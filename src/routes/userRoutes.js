@@ -79,3 +79,50 @@ router.post('/login', UserController.login);
 router.get('/profile', authMiddleware, UserController.getProfile);
 
 module.exports = router;
+
+/**
+ * @swagger
+ * /api/users/profile:
+ *   put:
+ *     summary: Atualiza o perfil do usuário autenticado
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Perfil atualizado com sucesso
+ *       401:
+ *         description: Não autorizado
+ *       404:
+ *         description: Usuário não encontrado
+ */
+router.put('/profile', authMiddleware, UserController.update);
+
+/**
+ * @swagger
+ * /api/users/profile:
+ *   delete:
+ *     summary: Exclui a conta do usuário autenticado
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Conta excluída com sucesso
+ *       401:
+ *         description: Não autorizado
+ *       404:
+ *         description: Usuário não encontrado
+ */
+router.delete('/profile', authMiddleware, UserController.destroy);

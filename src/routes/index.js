@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const userRoutes = require('./userRoutes');
-// const productRoutes = require('./productRoutes'); // Adicionar quando criar
-// const categoryRoutes = require('./categoryRoutes'); // Adicionar quando criar
+const categoryRoutes = require('./categoryRoutes'); // Importar novas rotas
 
 router.use('/users', userRoutes);
-// router.use('/products', productRoutes);
-// router.use('/categories', categoryRoutes);
+router.use('/categories', categoryRoutes); // Usar novas rotas
 
 module.exports = router;
