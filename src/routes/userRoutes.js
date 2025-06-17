@@ -78,8 +78,6 @@ router.post('/login', UserController.login);
  */
 router.get('/profile', authMiddleware, UserController.getProfile);
 
-module.exports = router;
-
 /**
  * @swagger
  * /api/users/profile:
@@ -126,3 +124,4 @@ router.put('/profile', authMiddleware, UserController.update);
  *         description: Usuário não encontrado
  */
 router.delete('/profile', authMiddleware, UserController.destroy);
+module.exports = router;
