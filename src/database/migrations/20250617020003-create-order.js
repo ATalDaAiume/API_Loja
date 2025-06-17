@@ -1,4 +1,5 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -9,8 +10,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false, // É uma boa prática adicionar isso
+        references: {
+          model: {
+            tableName: 'Users', // A mudança principal está aqui!
+          },
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'pending'
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +37,7 @@ module.exports = {
       }
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Orders');
   }
