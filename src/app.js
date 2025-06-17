@@ -1,17 +1,14 @@
 require('dotenv').config();
-require('./database'); // Conecta com o DB e inicializa os models
+require('./models'); // CORRIGIDO: Carrega a conexão e os modelos do lugar certo.
 
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const routes = require('./routes');
-
 const app = express();
 
-// Middlewares
 app.use(express.json());
 
-// Configuração do Swagger
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -26,25 +23,24 @@ const swaggerOptions = {
       },
     ],
     components: {
-        securitySchemes: {
-            bearerAuth: {
-                type: 'http',
-                scheme: 'bearer',
-                bearerFormat: 'JWT',
-            }
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
         }
+      }
     },
     security: [{
-        bearerAuth: []
+      bearerAuth: []
     }]
   },
-  apis: ['./src/routes/*.js'], // Caminho para os arquivos com anotações Swagger
+  apis: ['./src/routes/*.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// Rotas
 app.use('/api', routes);
 
 module.exports = app;

@@ -1,24 +1,20 @@
 'use strict';
-const { Model } = require('sequelize');
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      // Define que um Pedido PERTENCE A um Usuário
-      this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-      // Define que um Pedido PERTENCE A MUITOS Produtos, através da tabela OrderProduct
-      this.belongsToMany(models.Product, { 
-        foreignKey: 'orderId', 
-        through: 'OrderProducts', // Nome da tabela de junção
-        as: 'products' 
-      });
+      // define association here
     }
   }
   Order.init({
-    // Ex: 'pending', 'completed', 'canceled'
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: 'pending',
-    }
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Order',

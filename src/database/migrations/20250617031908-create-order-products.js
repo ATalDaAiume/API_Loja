@@ -1,6 +1,7 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('OrderProducts', {
       id: {
         allowNull: false,
@@ -8,6 +9,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      quantity: { type: Sequelize.INTEGER, allowNull: false },
+      price: { type: Sequelize.FLOAT, allowNull: false },
       orderId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -22,26 +25,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      // Campos opcionais que você pode querer na tabela de junção
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      price: { // Preço do produto no momento da compra
-        type: Sequelize.FLOAT,
-        allowNull: false,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('OrderProducts');
   }
 };

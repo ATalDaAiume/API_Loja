@@ -6,12 +6,12 @@ const authMiddleware = require('../middlewares/authMiddleware');
 /**
  * @swagger
  * tags:
- * name: Products
+ * - name: Products
  * description: Gerenciamento de produtos
  */
 
 router.get('/', ProductController.index);
-router.get('/:id', ProductController.show); // ROTA ADICIONADA
+router.get('/:id', ProductController.show);
 router.post('/', authMiddleware, ProductController.store);
 router.put('/:id', authMiddleware, ProductController.update);
 router.delete('/:id', authMiddleware, ProductController.destroy);

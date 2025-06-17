@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const { User } = require('../models'); // <-- CORRIGIDO AQUI
 const jwt = require('jsonwebtoken');
 
 function generateToken(params = {}) {
@@ -10,7 +10,6 @@ function generateToken(params = {}) {
 module.exports = {
   async register(req, res) {
     const { email, name, password } = req.body;
-
     try {
       if (await User.findOne({ where: { email } })) {
         return res.status(400).json({ error: 'User already exists' });
@@ -18,14 +17,12 @@ module.exports = {
 
       const user = await User.create({ email, name, password });
 
-      // Não retornar a senha
       user.password = undefined;
 
       return res.status(201).json({
         user,
         token: generateToken({ id: user.id }),
       });
-
     } catch (err) {
       return res.status(400).json({ error: 'User registration failed', details: err.message });
     }
@@ -33,7 +30,6 @@ module.exports = {
 
   async login(req, res) {
     const { email, password } = req.body;
-
     try {
       const user = await User.findOne({ where: { email } });
 
@@ -41,7 +37,7 @@ module.exports = {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      if (!await user.checkPassword(password)) {
+      if (!(await user.checkPassword(password))) {
         return res.status(401).json({ error: 'Invalid password' });
       }
       
@@ -51,16 +47,13 @@ module.exports = {
         user,
         token: generateToken({ id: user.id }),
       });
-
     } catch (err) {
       return res.status(400).json({ error: 'Login failed', details: err.message });
     }
   },
 
   async getProfile(req, res) {
-    // O ID do usuário vem do middleware de autenticação
     const userId = req.userId;
-
     try {
       const user = await User.findByPk(userId);
 
@@ -70,16 +63,14 @@ module.exports = {
 
       user.password = undefined;
       return res.json(user);
-
     } catch (err) {
       return res.status(500).json({ error: 'Failed to retrieve profile', details: err.message });
     }
   },
 
-    async update(req, res) {
+  async update(req, res) {
     const userId = req.userId;
     const { name, email } = req.body;
-
     try {
       const user = await User.findByPk(userId);
 
@@ -87,7 +78,6 @@ module.exports = {
         return res.status(404).json({ error: 'User not found' });
       }
 
-      // Se o email for alterado, verificar se já não está em uso
       if (email && email !== user.email) {
         const userExists = await User.findOne({ where: { email } });
         if (userExists) {
@@ -97,10 +87,9 @@ module.exports = {
 
       await user.update({ name, email });
 
-      user.password = undefined; // Não retornar a senha
+      user.password = undefined;
 
       return res.json(user);
-
     } catch (err) {
       return res.status(500).json({ error: 'Failed to update profile', details: err.message });
     }
@@ -118,7 +107,6 @@ module.exports = {
       await user.destroy();
 
       return res.status(200).json({ message: 'User account deleted successfully.' });
-
     } catch (err) {
       return res.status(500).json({ error: 'Failed to delete account', details: err.message });
     }

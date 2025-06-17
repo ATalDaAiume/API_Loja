@@ -1,32 +1,34 @@
-const { Model, DataTypes } = require('sequelize');
+'use strict';
+const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-class User extends Model {
-  static init(sequelize) {
-    super.init({
-      name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-    }, {
-      sequelize,
-      hooks: {
-        beforeSave: async (user) => {
-          if (user.password) {
-            user.password = await bcrypt.hash(user.password, 8);
-          }
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    static associate(models) {
+      this.hasMany(models.Order, { foreignKey: 'userId', as: 'orders' });
+    }
+
+    // Adicionado de volta o método para comparar senhas
+    checkPassword(password) {
+      return bcrypt.compare(password, this.password);
+    }
+  }
+
+  User.init({
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'User',
+    hooks: {
+      beforeSave: async (user) => {
+        if (user.password && user.changed('password')) {
+          user.password = await bcrypt.hash(user.password, 8);
         }
       }
-    });
-  }
+    }
+  });
 
-  static associate(models) {
-    this.hasMany(models.Order, { foreignKey: 'userId', as: 'orders' });
-  }
-
-  // Método para checar a senha
-  checkPassword(password) {
-    return bcrypt.compare(password, this.password);
-  }
-}
-
-module.exports = User;
+  return User;
+};

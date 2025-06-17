@@ -4,9 +4,13 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
-    // Define que uma Categoria TEM MUITOS Produtos
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-    // define associação aqui
+      // define association here
     }
   }
   Category.init({

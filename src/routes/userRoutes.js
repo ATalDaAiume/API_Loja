@@ -6,8 +6,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: Gerenciamento de usuários e autenticação
+ *   - name: Users
+ *     description: Gerenciamento de usuários e autenticação
  */
 
 /**
@@ -32,8 +32,6 @@ const authMiddleware = require('../middlewares/authMiddleware');
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso
- *       400:
- *         description: Erro na requisição
  */
 router.post('/register', UserController.register);
 
@@ -57,8 +55,6 @@ router.post('/register', UserController.register);
  *     responses:
  *       200:
  *         description: Login bem-sucedido
- *       401:
- *         description: Não autorizado
  */
 router.post('/login', UserController.login);
 
@@ -73,8 +69,6 @@ router.post('/login', UserController.login);
  *     responses:
  *       200:
  *         description: Perfil do usuário
- *       401:
- *         description: Não autorizado
  */
 router.get('/profile', authMiddleware, UserController.getProfile);
 
@@ -100,10 +94,6 @@ router.get('/profile', authMiddleware, UserController.getProfile);
  *     responses:
  *       200:
  *         description: Perfil atualizado com sucesso
- *       401:
- *         description: Não autorizado
- *       404:
- *         description: Usuário não encontrado
  */
 router.put('/profile', authMiddleware, UserController.update);
 
@@ -118,10 +108,7 @@ router.put('/profile', authMiddleware, UserController.update);
  *     responses:
  *       200:
  *         description: Conta excluída com sucesso
- *       401:
- *         description: Não autorizado
- *       404:
- *         description: Usuário não encontrado
  */
 router.delete('/profile', authMiddleware, UserController.destroy);
+
 module.exports = router;
