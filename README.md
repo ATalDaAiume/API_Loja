@@ -136,7 +136,7 @@ JWT_EXPIRES_IN=1d
 ---
 
 4. **Crie o banco de dados**
-5. 
+
 - No seu gerenciador de MySQL (Workbench, phpMyAdmin ou CLI), execute:
 ```bash
 CREATE DATABASE IF NOT EXISTS api_loja;
