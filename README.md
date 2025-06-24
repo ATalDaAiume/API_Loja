@@ -160,6 +160,8 @@ npx sequelize-cli db:migrate
 
 ```bash
 npm run dev
+```
+
 ---
 
 ## 🔎 Testes e Validação
